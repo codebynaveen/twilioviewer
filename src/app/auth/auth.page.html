@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Authenticate with Twilio Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="auth-card">
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">ACCOUNT SID</ion-label>
+        <ion-input required="true" [(ngModel)]="sid"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">AUTH TOKEN</ion-label>
+        <ion-input required="true" [(ngModel)]="token"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-text color="danger">{{errorMessage}}</ion-text>
+      </ion-item>
+      <ion-button expand="block" (click)="submit()">Authenticate</ion-button>
+    </ion-card-content>
+    <ion-button fill="outline" slot="end">View</ion-button>
+  </ion-card>
+
+  <div class="logout" *ngIf="token || sid">
+    <ion-button fill="clear" color="danger" (click)="logout()">Logout</ion-button>
+  </div>
+
+
+</ion-content>

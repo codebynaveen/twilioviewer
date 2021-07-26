@@ -1,20 +1,71 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-split-pane contentId="main">
+  <!--  the side menu  -->
+  <ion-menu contentId="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title> Twilio Viewer</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item lines="full" button *ngFor="let number of numbers" (click)="getMessages(number)">
+          +{{number}}
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Add new number</ion-label>
+          <ion-input type="tel" inputmode="tel" placeholder="Press Enter to Save"
+            (keydown.enter)="addNewNumber($event)"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-button expand="full" fill="clear" routerLink="/auth" >Change Account</ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-menu>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- the main content -->
+  <section id="main">
+    <ion-header [translucent]="true">
+      <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title *ngIf="selectedNumber">
+          +{{selectedNumber}}
+        </ion-title>
+        <ion-title *ngIf="!selectedNumber">
+          Select a number to view messages.
+        </ion-title>
+        <ion-button slot="end" fill="clear" color="danger" *ngIf="selectedNumber"
+          (click)="deleteNumber(selectedNumber)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+    <ion-content [fullscreen]="true">
+      <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
+      <ion-card *ngFor="let message of messages">
+        <ion-item>
+          <ion-text class="message-body">{{message.body}}</ion-text>
+        </ion-item>
+  
+        <ion-item>
+          <div>
+            <ion-text color="medium">From: {{message.from}}</ion-text>
+            <br />
+            <ion-text color="medium">{{message.date_sent | date:'medium'}}</ion-text>
+          </div>
+          <ion-badge slot="end" [color]="message.status === 'delivered' ? 'success' : 'danger'">{{message.status}}
+          </ion-badge>
+        </ion-item>
+      </ion-card>
+  
+      <div class="status-message" *ngIf="messages?.length === 0">
+        <ion-text>{{statusMessage}}</ion-text>
+      </div>
+    </ion-content>
+    
+  </section>
+
+</ion-split-pane>
