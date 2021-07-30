@@ -1,7 +1,7 @@
 # Twilio Viewer (twilioviewer)
 ## Simple PWA to view sent messages from twilio 
 
-Twrilio Viewer is a simple PWA built with Ionic Angular to retrive sent messages from Twilio account.
+Twilio Viewer is a simple PWA built with Ionic Angular to retrieve sent messages from the Twilio account.
 
 **Demo:** [https://twilioviewer.web.app](https://twilioviewer.web.app)
 
